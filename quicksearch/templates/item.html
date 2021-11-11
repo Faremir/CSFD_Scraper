@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .flex-results {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between
+        }
+    </style>
+    {% load static %}
+</head>
+<body>
+<div class="header" id="main-header">
+    <h1>{{ activeobj }}</h1>
+</div>
+<div class="content main-content">
+    <div class="search-result flex-results">
+        <div class="search-result-movies">
+            <h2>{{ categoryName|capfirst }}</h2>
+            <ul>
+                {% for relative in relatives %}
+                    <li class="result result-{{ relative.csfd_id }} movie">
+                        <a href="{% url "quicksearch:"|add:relativesName relative.csfd_id %}">{{ relative.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

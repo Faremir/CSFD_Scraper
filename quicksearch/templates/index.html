@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .flex-results {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between
+        }
+
+        .search-result.flex-results > div {
+            width: 50%;
+        }
+
+        .search-result.flex-results > div > .result {
+            margin: 10px 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="header" id="main-header"></div>
+<div class="content main-content">
+    <form action="{% url 'quicksearch:index' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <label for="search_field">Search</label>
+            <input id="search_field" type="text" name="search" placeholder="Actor/Actress or Movie name..."
+                   style="width:50%;">
+        </fieldset>
+    </form>
+    <div class="search-result flex-results">
+        {% if movies is not None %}
+            <div class="search-result-movies">
+                <h2>Movies:</h2>
+                {% for movie in movies %}
+                    <div class="result result-{{ movie.csfd_id }} movie">
+                        <a href="{% url "quicksearch:movie" movie.csfd_id %}">{{ movie.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if actors is not None %}
+            <div class="search-result-actors">
+                <h2>Actors/Actress:</h2>
+                {% for actor in actors %}
+                    <div class="result result-{{ actor.csfd_id }} movie">
+                        <a href="{% url "quicksearch:actor" actor.csfd_id %}">{{ actor.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
