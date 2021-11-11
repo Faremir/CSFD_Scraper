@@ -1,0 +1,4 @@
+Django~=3.2.9
+Scrapy~=2.5.1
+Twisted~=21.7.0
+itemadapter~=0.4.0
