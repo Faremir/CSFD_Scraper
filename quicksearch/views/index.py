@@ -5,11 +5,15 @@ from quicksearch.models import Actor, Movie
 
 
 def view(request):
-    search = request.POST.get("search", None)
-    context = {'lookup': search is not None}
+    search = request.POST.get("search", "")
     if search:
-        normalized = stringUtils.normalize(search)
-        context["movies"] = Movie.objects.filter(normalized_name__contains=normalized)
-        context["actors"] = Actor.objects.filter(normalized_name__contains=normalized)
+        search = stringUtils.normalize(search)
+    movies = Movie.objects.filter(normalized_name__contains=search)
+    actors = Actor.objects.filter(normalized_name__contains=search)
 
+    context = {
+            'lookup': search is not None,
+            'movies': movies,
+            'actors': actors
+            }
     return render(request, 'index.html', context)
